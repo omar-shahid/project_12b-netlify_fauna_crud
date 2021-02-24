@@ -17,6 +17,11 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
+functions/
+
+ts/GeneratedGraphQL.ts
+src/graphql/generated/GeneratedGraphQL.ts
 
 npm-debug.log*
 yarn-debug.log*
