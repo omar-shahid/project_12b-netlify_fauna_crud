@@ -1,0 +1,8 @@
+query AllTasks {
+  allTasks {
+    data {
+      description
+      completed
+    }
+  }
+}
