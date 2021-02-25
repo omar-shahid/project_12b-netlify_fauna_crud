@@ -3,6 +3,7 @@ query AllTasks {
     data {
       description
       completed
+      _id
     }
   }
 }

@@ -1,0 +1,10 @@
+input TaskInput {
+  description: String!
+  completed: Boolean!
+}
+
+mutation updateTask($id: ID!, $data: TaskInput!) {
+  updateTask(id: $id, data: $data) {
+    _id
+  }
+}

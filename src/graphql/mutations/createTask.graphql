@@ -1,0 +1,5 @@
+mutation createTask($description: String!, $completed: Boolean!) {
+  createTask(data: { description: $description, completed: $completed }) {
+    _id
+  }
+}
