@@ -4,12 +4,16 @@ import { print, DocumentNode } from "graphql";
 
 dotenv.config();
 
-export const request = <GraphQLType = undefined, Variables = undefined>(
+export const request = <GraphQLType, Variables>(
   documentPath: DocumentNode,
   variables?: Variables
 ) => {
+  console.log(process.env.FAUNA_SECRET);
   return axios
-    .post<{}, AxiosResponse<{ data: GraphQLType }>>(
+    .post<
+      {},
+      AxiosResponse<{ data?: GraphQLType; errors?: Record<string, any>[] }>
+    >(
       "https://graphql.fauna.com/graphql",
       {
         query: print(documentPath),
@@ -17,9 +21,16 @@ export const request = <GraphQLType = undefined, Variables = undefined>(
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.FAUNA_SECRET}`,
+          authorization: `Bearer ${process.env.FAUNA_SECRET}`,
         },
       }
     )
-    .then((res) => res.data);
+    .then((res) => res.data)
+    .then((s) => {
+      if (s.errors) {
+        console.log(s.errors);
+        throw new Error("Something went wrong when accessing the DB...");
+      }
+      return s;
+    });
 };
