@@ -11,11 +11,13 @@ export const handler: FunctionHandler = async (ev) => {
   if (!ev?.body) return sendResponse(401, { error: "Expected input" });
   const b = JSON.parse(ev?.body) as {
     description: string;
+    completed: boolean;
   };
-  const { description } = b;
+  const { description, completed } = b;
+  console.log(b);
   const data = await request<CreateTaskMutation, CreateTaskMutationVariables>(
     CreateTaskDocument,
-    { description, completed: false }
+    { description, completed }
   );
-  return sendResponse(200, data);
+  return sendResponse(200, data.data ?? {});
 };

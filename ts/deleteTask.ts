@@ -14,5 +14,5 @@ export const handler: FunctionHandler = async (ev) => {
     DeleteTaskDocument,
     { id }
   );
-  return sendResponse(200, data);
+  return sendResponse(200, data.data ?? {});
 };
