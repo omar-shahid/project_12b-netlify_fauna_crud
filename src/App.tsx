@@ -31,7 +31,7 @@ function App() {
   const [completed, setCompleted] = useState(false);
   useEffect(() => {
     axios
-      .post("/api/getTasks")
+      .post("/.netlify/functions/getTasks")
       .then((res) => res.data)
       .then((d) => setData((d as AllTasksQuery).allTasks.data));
   }, []);
@@ -40,7 +40,7 @@ function App() {
     _: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     const data = (
-      await axios.post("/api/createTask", {
+      await axios.post("/.netlify/functions/createTask", {
         description: input,
         completed: completed,
       })
@@ -54,7 +54,7 @@ function App() {
   };
 
   const deleteTask = async (id: string) => {
-    (await axios.post("/api/deleteTask", { id })).data as DeleteTaskMutation;
+    (await axios.post("/.netlify/functions/deleteTask", { id })).data as DeleteTaskMutation;
     // const obj = data?.findIndex((el) => el?._id === id) ?? -1;
     // if (obj >= -1) return;
     // console.log("WOorking here", obj);
@@ -65,7 +65,7 @@ function App() {
     description: string,
     completed: boolean
   ) => {
-    await axios.post<UpdateTaskMutation, null>("/api/updateTask", {
+    await axios.post<UpdateTaskMutation, null>("/.netlify/functions/updateTask", {
       id,
       data: { description, completed },
     });
